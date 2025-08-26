@@ -17,7 +17,7 @@
                     <span class="nav-text">Dashboard</span>
                 </a>
             </li>
-            
+
             @canany('Member', 'Student Member', 'Candidate Member', 'Professional Member', 'Associate Member', 'Trade Member', 'Corporate Member')
             <li>
                 <a href="{{ route('dashboard-gallery.all')}}" class="ai-icon" aria-expanded="false">
@@ -26,48 +26,26 @@
             </li>
             @endcanany
 
-            @canany('Member', 'Student Member', 'Candidate Member', 'Professional Member', 'Associate Member', 'Trade Member', 'Corporate Member')
-            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                <i class="flaticon-003-diamond"></i>
-                    <span class="nav-text">My Transactions</span>
+            <li>
+                <a href="{{ route('dashboard-gallery.all')}}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-381-picture"></i><span class="nav-text">Continent</span>
                 </a>
-                <ul aria-expanded="false">
-                    <li><a href="{{ Route('transaction-annual.index')}}">Annual Fee</a></li>
-                    <li><a href="{{ Route('transaction-event.index')}}">Event Fee</a></li>
-                </ul>
             </li>
-            @endcanany
-
-            @canany('Payment menu access')
-            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                <i class="flaticon-381-database"></i>
-                    <span class="nav-text">Payment History</span>
+            <li>
+                <a href="{{ route('dashboard-gallery.all')}}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-381-picture"></i><span class="nav-text">Gallery</span>
                 </a>
-                <ul aria-expanded="false">
-                    @canany('Annual fees access', 'Annual fees approved', 'Annual fees record')
-                    <li><a href="{{Route('transaction-annual-approve.index')}}">Annual Fee Details</a></li>
-                    @endcanany
-                    @canany('Event fees access', 'Event fees approved', 'Event fees record')
-                    <li><a href="{{Route('transaction-event-approve.index')}}">Event Fee Details</a></li>
-                    @endcanany
-                    @canany('Membership fees access', 'Membership fees approved', 'Membership fees record')
-                    <li><a href="{{Route('transaction-registation-approve.index')}}">Membership Fee Details</a></li>
-                    @endcanany
-                    @canany('Data Setting')
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Data Setting</a>
-                        <ul aria-expanded="false">
-                            @canany('Pyment number access','Pyment number create','Pyment number edit', 'Pyment number view', 'Pyment number delete')
-                            <li><a href="{{Route('transaction-payment-number.index')}}">Setup Payment Number</a></li>
-                            @endcanany
-                            @canany('Pyment fees access','Pyment annual fees','Pyment membership fees')
-                            <li><a href="{{Route('transaction-payment-fees.index')}}">Setup Payment Fee</a></li>
-                            @endcanany
-                        </ul>
-                    </li>
-                    @endcanany
-                </ul>
             </li>
-            @endcanany
+            <li>
+                <a href="{{ route('dashboard-gallery.all')}}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-381-picture"></i><span class="nav-text">Gallery</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('dashboard-gallery.all')}}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-381-picture"></i><span class="nav-text">Notice & News</span>
+                </a>
+            </li>
 
             @canany('Post menu access')
             <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
@@ -102,15 +80,15 @@
                     @canany('User access','User create','User edit','User delete')
                     <li><a href="{{ Route('users.index')}}">Manage User</a></li>
                     @endcanany
-                    
+
                 </ul>
             </li>
             @endcanany
 
         </ul>
         <div class="copyright py-4 my-4">
-            {{-- <p><strong></strong><!-- © 2023 All Rights Reserved--></p>
-            <p class="fs-12">Made with <span class="heart"></span> by <a href="#"><img src="{{asset('public/frontend')}}/images/" alt="" style="width:30px;"></a></p> --}}
+            <p><strong></strong><!-- © 2023 All Rights Reserved--></p>
+            <p class="fs-12">Made with <span class="heart"></span> by <a href="#"><br><img src="{{asset('public')}}/made-logo.png" alt="" height="50"></a></p>
         </div>
     </div>
 

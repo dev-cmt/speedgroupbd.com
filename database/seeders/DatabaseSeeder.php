@@ -15,9 +15,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            CreateUserSeeder::class, 
-            RolePermissionSeeder::class, 
-            ImportSeeder::class
+            CreateUserSeeder::class,
+            RolePermissionSeeder::class,
+            ImportSeeder::class,
+            ContinentCountrySeeder::class,
         ]);
     }
 }

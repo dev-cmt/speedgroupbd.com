@@ -5,11 +5,18 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\ContactController;
-use App\Http\Controllers\Admin\GalleryController;
-use App\Http\Controllers\Admin\TransactionController;
-use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\BlogController;
+
+use App\Http\Controllers\ContinentController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\PlaceController;
+use App\Http\Controllers\TourPackageController;
+use App\Http\Controllers\PackageIncludeController;
+use App\Http\Controllers\BookingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,9 +72,7 @@ Route::get('page/privacy-policy', [HomeController::class,'privacyPolicy'])->name
  */
 Route::middleware([ 'auth:sanctum','verified','member', config('jetstream.auth_session')])->group(function () {
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-    Route::get('page/member-all', [AdminController::class, 'member'])->name('page.member-all');
-    Route::get('page/member-search', [AdminController::class,'memberSearch'])->name('page.member-search');
-    
+
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
 });
@@ -114,7 +119,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::PATCH('transaction-event/{id}/approve', [TransactionController::class, 'approveEventApproved'])->name('transaction-event.approve');
     Route::PATCH('transaction-event/{id}/cancel', [TransactionController::class, 'approveEventCancel'])->name('transaction-event.cancel');
     Route::get('transaction-event/{id}/details', [TransactionController::class, 'approveEventDetails'])->name('transaction-event.details');
-    
+
     //-- TRANSACTION => ANNUAL REGISTATION
     Route::get('transaction-annual/index', [TransactionController::class,'indexAnnualFees'])->name('transaction-annual.index');
     Route::get('transaction-annual/create', [TransactionController::class,'createAnnualFees'])->name('transaction-annual.create');
@@ -123,7 +128,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::PATCH('transaction-annual/{id}/approve', [TransactionController::class, 'approveAnnualFeesApproved'])->name('transaction-annual.approve');
     Route::PATCH('transaction-annual/{id}/cancel', [TransactionController::class, 'approveAnnualFeesCancel'])->name('transaction-annual.cancel');
     Route::get('transaction-annual/{id}/details', [TransactionController::class, 'approveAnnualFeesDetails'])->name('transaction-annual.details');
-    
+
     //-- MASTER SETTING =>> PAYMENT NUMBER
     Route::get('master/transaction-payment/number/index',[TransactionController::class,'indexPaymentNumber'])->name('transaction-payment-number.index');
     Route::post('master/transaction-payment/number/store',[TransactionController::class,'storePaymentNumber'])->name('transaction-payment-number.store');
@@ -163,5 +168,33 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('contact-us/index', [ContactController::class,'contactIndex'])->name('contact-us.index');
     Route::get('contact-us/{id}/reply', [ContactController::class,'contactReply'])->name('contact-us.reply');
     Route::get('contact-us/{id}/delete', [ContactController::class,'contactDelete'])->name('contact-us.delete');
+
+
+    // Resource Routes for CRUD operations
+    Route::resource('continents', ContinentController::class);
+    Route::resource('countries', CountryController::class);
+    Route::resource('places', PlaceController::class);
+    Route::resource('tour-packages', TourPackageController::class);
+    Route::resource('package-includes', PackageIncludeController::class);
+    Route::resource('bookings', BookingController::class);
+
+
+    // Additional custom routes
+    Route::get('countries/by-continent/{continentId}', [CountryController::class, 'getByContinent']);
+    Route::get('places/by-country/{countryId}', [PlaceController::class, 'getByCountry']);
+    Route::get('packages/by-place/{placeId}', [TourPackageController::class, 'getByPlace']);
+    Route::get('includes/by-package/{packageId}', [PackageIncludeController::class, 'getByPackage']);
+    Route::get('bookings/by-user/{userId}', [BookingController::class, 'getByUser']);
+    Route::get('bookings/by-package/{packageId}', [BookingController::class, 'getByPackage']);
+
+    // Package page route (from your HTML)
+    Route::get('/packages', function () {
+        return view('packages.index'); // You'll need to create this view
+    })->name('page.package');
+
+    // Multi-city package route (from your HTML)
+    Route::get('/package-details-multicity', function () {
+        return view('packages.multicity'); // You'll need to create this view
+    })->name('page.package-details-multicity');
 
 });
