@@ -1,12 +1,11 @@
-<!-- resources/views/continents/index.blade.php -->
 <x-app-layout>
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Continents List</h4>
-                    <a href="{{ route('continents.create') }}" class="btn btn-sm btn-primary">
-                        <i class="fa fa-plus"></i><span class="btn-icon-add"></span>Add New
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title">Places List</h4>
+                    <a href="{{ route('places.create') }}" class="btn btn-sm btn-primary">
+                        <i class="fa fa-plus"></i> Add New
                     </a>
                 </div>
 
@@ -16,29 +15,39 @@
                             <thead>
                                 <tr>
                                     <th>SL</th>
+                                    <th>Image</th>
                                     <th>Name</th>
+                                    <th>Country</th>
                                     <th>Slug</th>
-                                    <th>Countries</th>
                                     <th>Created At</th>
                                     <th class="text-right pr-4">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($continents as $key => $continent)
+                                @foreach ($places as $key => $place)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $continent->name }}</td>
-                                    <td>{{ $continent->slug }}</td>
-                                    <td>{{ $continent->countries_count }}</td>
-                                    <td>{{ $continent->created_at->format('d M, Y') }}</td>
+                                    <td>
+                                        @if($place->image)
+                                            <img src="{{ asset('public/' . $place->image) }}" width="50" height="50" class="rounded">
+                                        @else
+                                            <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width:50px;height:50px;">
+                                                <i class="fa fa-image text-muted"></i>
+                                            </div>
+                                        @endif
+                                    </td>
+                                    <td>{{ $place->name }}</td>
+                                    <td>{{ $place->country->name }}</td>
+                                    <td>{{ $place->slug }}</td>
+                                    <td>{{ $place->created_at->format('d M, Y') }}</td>
                                     <td class="d-flex justify-content-end">
-                                        <a href="{{ route('continents.edit', $continent->id) }}" class="btn btn-success shadow btn-xs sharp mr-1">
+                                        <a href="{{ route('places.edit', $place->id) }}" class="btn btn-success shadow btn-xs sharp mr-1">
                                             <i class="fa fa-pencil"></i>
                                         </a>
-                                        <a href="{{ route('continents.show', $continent->id) }}" class="btn btn-info shadow btn-xs sharp mr-1">
+                                        <a href="{{ route('places.show', $place->id) }}" class="btn btn-info shadow btn-xs sharp mr-1">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <form action="{{ route('continents.destroy', $continent->id) }}" method="post">
+                                        <form action="{{ route('places.destroy', $place->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger shadow btn-xs sharp" onclick="return confirm('Are you sure?');" type="submit">
@@ -52,6 +61,7 @@
                         </table>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

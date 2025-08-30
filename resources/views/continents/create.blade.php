@@ -53,20 +53,6 @@
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="val-slug">Slug
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <div class="col-lg-6">
-                                            <input type="text" id="val-slug" class="form-control @error('slug') is-invalid @enderror"
-                                                name="slug" placeholder="Enter slug.." value="{{ old('slug') }}">
-                                            @error('slug')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
                                         <div class="col-lg-8 ml-auto">
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>

@@ -19,7 +19,7 @@ class CreateUserSeeder extends Seeder
     public function run()
     {
         $super_admin = User::create([
-            'name'=>'BAFIITA',
+            'name'=>'SG-BD Admin',
             'email_verified_at' => '2022-01-01',
             'email'=>'Admin',
             'status' => '1',

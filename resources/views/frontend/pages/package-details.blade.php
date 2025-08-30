@@ -60,20 +60,22 @@
                                 <div class="col-lg-12">
                                     <div class="inner-heading-wrap flex-two">
                                         <div class="inner-heading">
-                                            <span class="feature">Featured</span>
-                                            <h2 class="title">Africa – Amazing African Safari</h2>
+                                            @if ($package->is_featured)
+                                                <span class="feature">{{ $package->is_featured }}</span>
+                                            @endif
+                                            <h2 class="title">{{$package->title}}</h2>
                                             <ul class="flex-three list-wrap-heading">
                                                 <li class="flex-three">
                                                     <i class="icon-time-left"></i>
-                                                    <span>5 Hours</span>
+                                                    <span>{{$package->duration}}</span>
                                                 </li>
                                                 <li class="flex-three">
                                                     <i class="icon-user"></i>
-                                                    <span>Max Guests: 12</span>
+                                                    <span>{{ $package->max_persons }} Person{{ $package->max_persons != 1 ? 's' : '' }}</span>
                                                 </li>
                                                 <li class="flex-three">
                                                     <i class="icon-18"></i>
-                                                    <span>1421 San Pedro St, Los Angeles, CA</span>
+                                                    <span>{{$package->place->name}}, {{$package->place->country->name}}</span>
                                                 </li>
 
 
@@ -89,7 +91,7 @@
                                                     <i class="icon-Star"></i>
                                                     <i class="icon-Star"></i>
                                                 </div>
-                                                <span class="review">(1 Review)</span>
+                                                <span class="review">({{ $package->review_count }} Review{{ $package->review_count != 1 ? 's' : '' }})</span>
                                             </div>
                                             <p class="price-sale text-main">$130.00 <span class="price">$16000</span></p>
                                         </div>
@@ -99,205 +101,20 @@
                                 </div>
                             </div>
                             <div class="row mb-40 image-gallery-single">
-                                <div class="col-12 col-sm-6">
-                                    <img src="{{ asset('public/frontend') }}/images/destination/1.jpg" alt="image">
+                                <div class="col-12 col-md-12">
+                                    <img src="{{ asset('public/' . $package->image) }}" alt="image">
                                 </div>
-                                <div class="col-6 col-sm-3">
+                                {{-- <div class="col-6 col-sm-3">
                                     <img src="{{ asset('public/frontend') }}/images/destination/2.jpg" alt="image">
                                 </div>
                                 <div class="col-6 col-sm-3">
                                     <img src="{{ asset('public/frontend') }}/images/destination/3.jpg" alt="image">
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="row">
                                 <div class="col-lg-8">
                                     <div class="information-content-tour">
-                                        <div class="description-wrap mb-40">
-                                            <span class="description">Description:</span>
-                                            <p class="des">Description It is a long established fact that a
-                                                reader will be distrac by any websites look for ways
-                                                mornings
-                                                of spring prevent AdBlock from blocking annoying ads. As a
-                                                result, we've focused on improving our funct
-                                                so that we can overcome these anti-ad blocking attempts. Of
-                                                course, you can help us continue improve our
-                                                ad blocking ability by reporting any time you run into a
-                                                website that won't allow you to block the readable
-                                                content of a page when looking at its layout. It is a long
-                                                established fact</p>
-                                        </div>
-                                        <div class="description-wrap mb-40">
-                                            <span class="description">Advance Facilities</span>
-                                            <p class="des">Leave your guidebooks at home and dive into the
-                                                local cultures that make each destination so special. We’ll
-                                                connect you with our exclusive experiences. Each trip is
-                                                carefully crafted to let enjoy your vacation.</p>
-                                        </div>
-                                        <div class="description-wrap mb-40">
-                                            <span class="description">What to Expect</span>
-                                            <p class="des mb-18">Leave your guidebooks at home and dive into
-                                                the local cultures that make each destination so special.
-                                                We’ll
-                                                connect you with our exclusive experiences. Each trip is
-                                                carefully crafted to let enjoy your vacation.
-                                            </p>
-                                            <ul class="listing-des">
-                                                <li>
-                                                    <p>View the City Walls</p>
-                                                </li>
-                                                <li>
-                                                    <p>Hiking in the forest</p>
-                                                </li>
-                                                <li>
-                                                    <p>Discover the famous view point “The Lark”</p>
-                                                </li>
-                                                <li>
-                                                    <p>Sunset on the cruise</p>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="expect-wrap mb-70">
-                                            <h4 class="title mb-18">What to Expect</h4>
-                                            <div class="expect flex-three">
-                                                <span>Departure/Return Location</span>
-                                                <p>2 Taijichang St, Dongcheng Qu, Beijing Shi, China</p>
-                                            </div>
-                                            <div class="expect flex-three">
-                                                <span>Departure Time</span>
-                                                <p>Please arrive by 9:15 AM for a departure at 9:30 AM</p>
-                                            </div>
-                                            <div class="expect flex-three">
-                                                <span>Return Time</span>
-                                                <p>Approximately 8:30 PM</p>
-                                            </div>
-                                            <div class="expect flex-three">
-                                                <span>Return Time</span>
-                                                <p>Approximately 8:30 PM</p>
-                                            </div>
-                                            <div class="expect flex-three">
-                                                <span>Return Time</span>
-                                                <p>Approximately 8:30 PM</p>
-                                            </div>
-                                        </div>
-                                        <div class="expect-wrap mb-70">
-                                            <h4 class="title mb-40">Included/Exclude</h4>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <ul class="listing-clude">
-                                                        <li class="flex-three">
-                                                            <i class="icon-Vector-7"></i>
-                                                            <p>Pick and Drop Services</p>
-                                                        </li>
-                                                        <li class="flex-three">
-                                                            <i class="icon-Vector-7"></i>
-                                                            <p>1 Meal Per Day</p>
-                                                        </li>
-                                                        <li class="flex-three">
-                                                            <i class="icon-Vector-7"></i>
-                                                            <p>Cruise Dinner & Music Event</p>
-                                                        </li>
-                                                        <li class="flex-three">
-                                                            <i class="icon-Vector-7"></i>
-                                                            <p>Visit 7 Best Places in the City With Group
-                                                            </p>
-                                                        </li>
-                                                    </ul>
-
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <ul class="listing-clude">
-                                                        <li class="flex-three">
-                                                            <i class="icon-Vector-7"></i>
-                                                            <p>Pick and Drop Services</p>
-                                                        </li>
-                                                        <li class="flex-three">
-                                                            <i class="icon-Vector-7"></i>
-                                                            <p>1 Meal Per Day</p>
-                                                        </li>
-                                                        <li class="flex-three">
-                                                            <i class="icon-Vector-7"></i>
-                                                            <p>Cruise Dinner & Music Event</p>
-                                                        </li>
-                                                        <li class="flex-three">
-                                                            <i class="icon-Vector-7"></i>
-                                                            <p>Visit 7 Best Places in the City With Group
-                                                            </p>
-                                                        </li>
-                                                    </ul>
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="expect-wrap">
-                                            <h4 class="title mb-40">Tour Amenities</h4>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <ul class="listing-icon">
-                                                        <li class="flex-three">
-                                                            <i class="icon-10"></i>
-                                                            <p>Air Conditioning</p>
-                                                        </li>
-                                                        <li class="flex-three">
-                                                            <i class="icon-10"></i>
-                                                            <p>Microwave</p>
-                                                        </li>
-                                                        <li class="flex-three">
-                                                            <i class="icon-10"></i>
-                                                            <p>Central Heating</p>
-                                                        </li>
-                                                        <li class="flex-three">
-                                                            <i class="icon-10"></i>
-                                                            <p>Central Heating</p>
-                                                        </li>
-                                                    </ul>
-
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <ul class="listing-icon">
-                                                        <li class="flex-three">
-                                                            <i class="icon-10"></i>
-                                                            <p>Laundry</p>
-                                                        </li>
-                                                        <li class="flex-three">
-                                                            <i class="icon-10"></i>
-                                                            <p>Outdoor Shower</p>
-                                                        </li>
-                                                        <li class="flex-three">
-                                                            <i class="icon-10"></i>
-                                                            <p>Swimming Pool</p>
-                                                        </li>
-                                                        <li class="flex-three">
-                                                            <i class="icon-10"></i>
-                                                            <p>Wifi</p>
-                                                        </li>
-                                                    </ul>
-
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <ul class="listing-icon">
-                                                        <li class="flex-three">
-                                                            <i class="icon-10"></i>
-                                                            <p>Window Covering</p>
-                                                        </li>
-                                                        <li class="flex-three">
-                                                            <i class="icon-10"></i>
-                                                            <p>Refrigerator</p>
-                                                        </li>
-                                                        <li class="flex-three">
-                                                            <i class="icon-10"></i>
-                                                            <p>Alarm System</p>
-                                                        </li>
-                                                        <li class="flex-three">
-                                                            <i class="icon-10"></i>
-                                                            <p>Window Coverings</p>
-                                                        </li>
-                                                    </ul>
-
-                                                </div>
-                                            </div>
-
-                                        </div>
+                                        {!! $package->description !!}
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -502,90 +319,6 @@
                                                     another over dinner we've
                                                     focused on improving our funct together. Sleep in Luzern
                                                     (2 nights). No bus. Walk</p>
-                                            </div>
-                                        </div>
-                                        <div class="tour-planing-section flex">
-                                            <div class="number-box flex-five">02</div>
-                                            <div class="content-box">
-                                                <h5 class="title">Day 2: Zürich–Biel/BienneNeuchâtel–Geneva
-                                                </h5>
-                                                <p class="des mb-10">We’ll meet at 4 p.m. at our hotel in
-                                                    Luzern (Lucerne) for a “Welcome to Switzerland”
-                                                    meeting. Then we’ll take a meandering evening walk
-                                                    through Switzerland’s most
-                                                    charming lakeside town, and get acquainted with one
-                                                    another over </p>
-                                                <ul class="listing-des">
-                                                    <li>
-                                                        <p>View the City Walls</p>
-                                                    </li>
-                                                    <li>
-                                                        <p>Hiking in the forest</p>
-                                                    </li>
-                                                    <li>
-                                                        <p>Discover the famous view point “The Lark”</p>
-                                                    </li>
-                                                    <li>
-                                                        <p>Sunset on the cruise</p>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="tour-planing-section flex">
-                                            <div class="number-box flex-five">03</div>
-                                            <div class="content-box">
-                                                <h5 class="title">Day 3: Enchanting Engelberg</h5>
-                                                <p class="des mb-22">We’ll meet at 4 p.m. at our hotel in
-                                                    Luzern (Lucerne) for a “Welcome to Switzerland”
-                                                    meeting. Then we’ll take a meandering evening walk
-                                                    through Switzerland’s most
-                                                    charming lakeside town, and get acquainted with one
-                                                    another over </p>
-                                                <ul class="listing-icon">
-                                                    <li class="flex-three">
-                                                        <i class="icon-10"></i>
-                                                        <p>Praesent vulputate at enim sit amet mattis
-                                                            lobortis ante pulvinar at diam</p>
-                                                    </li>
-                                                    <li class="flex-three">
-                                                        <i class="icon-10"></i>
-                                                        <p>Donec ut lobortis ante, non lobortis ante
-                                                            imperdiet est volutpat in diam erat</p>
-                                                    </li>
-                                                    <li class="flex-three">
-                                                        <i class="icon-10"></i>
-                                                        <p>Donec ut lobortis ante, non lobortis ante
-                                                            imperdiet est volutpat in diam erat</p>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="tour-planing-section flex">
-                                            <div class="number-box flex-five">04</div>
-                                            <div class="content-box">
-                                                <h5 class="title">Day 4: Arrive in Zürich, Switzerland</h5>
-                                                <p class="des mb-25">We’ll meet at 4 p.m. at our hotel in
-                                                    Luzern (Lucerne) for a “Welcome to Switzerland”
-                                                    meeting. Then we’ll take a meandering evening walk
-                                                    through Switzerland</p>
-                                                <ul class="listing-clude">
-                                                    <li class="flex-three">
-                                                        <i class="icon-Vector-7"></i>
-                                                        <p>Pick and Drop Services</p>
-                                                    </li>
-                                                    <li class="flex-three">
-                                                        <i class="icon-Vector-7"></i>
-                                                        <p>1 Meal Per Day</p>
-                                                    </li>
-                                                    <li class="flex-three">
-                                                        <i class="icon-Vector-7"></i>
-                                                        <p>Cruise Dinner & Music Event</p>
-                                                    </li>
-                                                    <li class="flex-three">
-                                                        <i class="icon-Vector-7"></i>
-                                                        <p>Visit 7 Best Places in the City With Group</p>
-                                                    </li>
-                                                </ul>
                                             </div>
                                         </div>
 

@@ -20,48 +20,39 @@
 
             @canany('Member', 'Student Member', 'Candidate Member', 'Professional Member', 'Associate Member', 'Trade Member', 'Corporate Member')
             <li>
-                <a href="{{ route('dashboard-gallery.all')}}" class="ai-icon" aria-expanded="false">
+                <a href="{{ route('gallery.index')}}" class="ai-icon" aria-expanded="false">
                     <i class="flaticon-381-picture"></i><span class="nav-text">Gallery</span>
                 </a>
             </li>
             @endcanany
 
             <li>
-                <a href="{{ route('dashboard-gallery.all')}}" class="ai-icon" aria-expanded="false">
-                    <i class="flaticon-381-picture"></i><span class="nav-text">Continent</span>
+                <a href="{{ route('continents.index')}}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-381-earth-globe-1"></i><span class="nav-text">Continent</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('dashboard-gallery.all')}}" class="ai-icon" aria-expanded="false">
-                    <i class="flaticon-381-picture"></i><span class="nav-text">Gallery</span>
+                <a href="{{ route('countries.index')}}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-381-flag-2"></i><span class="nav-text">Country</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('dashboard-gallery.all')}}" class="ai-icon" aria-expanded="false">
-                    <i class="flaticon-381-picture"></i><span class="nav-text">Gallery</span>
+                <a href="{{ route('places.index')}}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-381-location-3"></i><span class="nav-text">Place</span>
                 </a>
             </li>
             <li>
-                <a href="{{ route('dashboard-gallery.all')}}" class="ai-icon" aria-expanded="false">
-                    <i class="flaticon-381-picture"></i><span class="nav-text">Notice & News</span>
+                <a href="{{ route('packages.index')}}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-381-windows"></i><span class="nav-text">Tour Packages</span>
                 </a>
             </li>
 
-            @canany('Post menu access')
-            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                    <i class="flaticon-381-pad"></i>
-                    <span class="nav-text">Web Post</span>
+            
+            <li>
+                <a href="{{ route('blog.index')}}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-381-newspaper"></i><span class="nav-text">Notice & News</span>
                 </a>
-                <ul aria-expanded="false">
-                    @canany('Blog access','Blog create','Blog edit','Blog delete')
-                        <li><a href="{{ Route('blog.index')}}">Notice & News</a></li>
-                    @endcanany
-                    @canany('Gallery access','Gallery create','Gallery edit','Gallery delete')
-                        <li><a href="{{ Route('gallery.index')}}">Photo Gallery</a></li>
-                    @endcanany
-                </ul>
             </li>
-            @endcanany
 
             @canany('Setting menu access')
             <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">

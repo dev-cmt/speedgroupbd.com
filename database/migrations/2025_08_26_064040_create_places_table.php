@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('country_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->text('description');
-            $table->string('image');
+            $table->text('description')->nullable();
+            $table->string('image')->nullable();
             $table->string('slug')->unique();
+            $table->boolean('status')->default(true); 
             $table->timestamps();
         });
     }

@@ -517,992 +517,73 @@
                     </div>
                     <div class="tab-tour-list">
                         <ul class="nav justify-content-center tab-list mb-37" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="new-york-tab" data-bs-toggle="tab" data-bs-target="#new-york-tab-pane" type="button" role="tab" aria-controls="new-york-tab-pane" aria-selected="true">Asia</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="london-tab" data-bs-toggle="tab" data-bs-target="#london-tab-pane" type="button" role="tab" aria-controls="london-tab-pane" aria-selected="false">Europe</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="tokyo-tab" data-bs-toggle="tab" data-bs-target="#tokyo-tab-pane" type="button"  role="tab" aria-controls="tokyo-tab-pane" aria-selected="false">Middle East</button>
-                            </li>
+                            @foreach($continents as $index => $continent)
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link {{ $index === 0 ? 'active' : '' }}" 
+                                            id="{{ Str::slug($continent->name) }}-tab" 
+                                            data-bs-toggle="tab" 
+                                            data-bs-target="#{{ Str::slug($continent->name) }}-tab-pane" 
+                                            type="button" 
+                                            role="tab" 
+                                            aria-controls="{{ Str::slug($continent->name) }}-tab-pane" 
+                                            aria-selected="{{ $index === 0 ? 'true' : 'false' }}">
+                                        {{ $continent->name }}
+                                    </button>
+                                </li>
+                            @endforeach
                         </ul>
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="new-york-tab-pane" role="tabpanel" aria-labelledby="new-york-tab" tabindex="0">
-                                <div class="row">
-                                    <div class="col-sm-6 col-lg-3">
-                                        <div class="tour-listing wow fadeInUp animated" data-wow-delay="0.1s">
-                                            <a href="{{route('page.package-details')}}" class="tour-listing-image">
-                                                <div class="badge-top flex-two">
-                                                    <span class="feature">Featured</span>
-                                                    <div class="badge-media flex-five">
-                                                        <span class="media"><i class="icon-Group-1000002909"></i>5</span>
-                                                        <span class="media"><i class="icon-Group-1000002910"></i>2</span>
-                                                    </div>
+                            @foreach($continents as $index => $continent)
+                                <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}" 
+                                    id="{{ Str::slug($continent->name) }}-tab-pane" 
+                                    role="tabpanel" 
+                                    aria-labelledby="{{ Str::slug($continent->name) }}-tab" 
+                                    tabindex="0">
+                                    <div class="row">
+                                        @php
+                                            $continentPackages = [];
+                                            foreach($continent->countries as $country) {
+                                                foreach($country->places as $place) {
+                                                    foreach($place->tourPackages as $package) {
+                                                        $continentPackages[] = $package;
+                                                    }
+                                                }
+                                            }
+                                            // Get only the first 4 packages for display
+                                            $displayPackages = array_slice($continentPackages, 0, 4);
+                                        @endphp
+                                        
+                                        @if(count($displayPackages) > 0)
+                                            @foreach($displayPackages as $package)
+                                                <div class="col-sm-6 col-lg-3">
+                                                    @include('frontend.partials.__package', $package);
                                                 </div>
-                                                <img src="{{ asset('public/frontend') }}/images/travel-list/1.jpg" alt="Image Listing">
-                                            </a>
-                                            <div class="tour-listing-content">
-                                                <span class="tag-listing">Bestseller</span>
-                                                <span class="map"><i class="icon-Vector4"></i>United States USA</span>
-                                                <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days and 6 nights From Moscow</a></h3>
-                                                <div class="review">
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <span>(1 Review)</span>
-                                                </div>
-                                                <div class="icon-box flex-three">
-                                                    <div class="icons flex-three">
-                                                        <i class="icon-time-left"></i>
-                                                        <span>5 days</span>
-                                                    </div>
-                                                    <div class="icons flex-three">
-                                                        <svg width="21" height="16" viewBox="0 0 21 16"
-                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M4.34766 4.79761C4.34766 2.94013 5.85346 1.43433 7.71094 1.43433C9.56841 1.43433 11.0742 2.94013 11.0742 4.79761C11.0742 6.65508 9.56841 8.16089 7.71094 8.16089C5.85346 8.16089 4.34766 6.65508 4.34766 4.79761Z"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M9.5977 15.1797H2.46098C1.34827 15.1797 0.558268 14.0954 0.898984 13.0362C1.80408 10.222 4.57804 8.18566 7.69301 8.18566C9.17897 8.18566 10.5566 8.64906 11.6895 9.43922"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M17.1035 15.1797V9.02734"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M20.1797 12.1035H14.0273"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                        </svg>
-                                                        <span>12 Person</span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-two">
-                                                    <div class="price-box flex-three">
-                                                        <p>From <span class="price-sale">$169.00</span></p>
-                                                        <span class="price">$199.00</span>
-                                                    </div>
-                                                    <div class="icon-bookmark">
-                                                        <i class="icon-Vector-151"></i>
-                                                    </div>
-                                                </div>
+                                            @endforeach
+                                        @else
+                                            <div class="col-12 text-center">
+                                                <p>No tour packages available for {{ $continent->name }}.</p>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    @if(count($continentPackages) > 4)
+                                        <div class="row wow fadeInUp">
+                                            <div class="col-lg-12 center mt-44">
+                                                <a href="{{ route('page.tour-archive', ['continent' => $continent->slug]) }}" class="btn-main">
+                                                    <p class="btn-main-text">View all tours</p>
+                                                    <p class="iconer">
+                                                        <i class="icon-13"></i>
+                                                    </p>
+                                                </a>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-6 col-lg-3">
-                                        <div class="tour-listing wow fadeInUp animated "
-                                            data-wow-delay="0.2s">
-                                            <a href="{{route('page.package-details')}}" class="tour-listing-image">
-                                                <div class="badge-top flex-two">
-                                                    <span class="feature">Featured</span>
-                                                    <div class="badge-media flex-five">
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002909"></i>5</span>
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002910"></i>2</span>
-                                                    </div>
-                                                </div>
-                                                <img src="{{ asset('public/frontend') }}/images/travel-list/2.jpg"
-                                                    alt="Image Listing">
+                                    @endif
 
-                                            </a>
-                                            <div class="tour-listing-content">
-                                                <span class="tag-listing">Trending</span>
-                                                <span class="map"><i class="icon-Vector4"></i>United States
-                                                    USA</span>
-                                                <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days
-                                                        and 6 nights
-                                                        From Moscow</a>
-                                                </h3>
-                                                <div class="review">
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <span>(1 Review)</span>
-                                                </div>
-                                                <div class="icon-box flex-three">
-                                                    <div class="icons flex-three">
-                                                        <i class="icon-time-left"></i>
-                                                        <span>5 days</span>
-                                                    </div>
-                                                    <div class="icons flex-three">
-                                                        <svg width="21" height="16" viewBox="0 0 21 16"
-                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M4.34766 4.79761C4.34766 2.94013 5.85346 1.43433 7.71094 1.43433C9.56841 1.43433 11.0742 2.94013 11.0742 4.79761C11.0742 6.65508 9.56841 8.16089 7.71094 8.16089C5.85346 8.16089 4.34766 6.65508 4.34766 4.79761Z"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M9.5977 15.1797H2.46098C1.34827 15.1797 0.558268 14.0954 0.898984 13.0362C1.80408 10.222 4.57804 8.18566 7.69301 8.18566C9.17897 8.18566 10.5566 8.64906 11.6895 9.43922"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M17.1035 15.1797V9.02734"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M20.1797 12.1035H14.0273"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                        </svg>
-                                                        <span>12 Person</span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-two">
-                                                    <div class="price-box flex-three">
-                                                        <p>From <span class="price-sale">$169.00</span></p>
-                                                        <span class="price">$199.00</span>
-                                                    </div>
-                                                    <div class="icon-bookmark">
-                                                        <i class="icon-Vector-151"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-lg-3">
-                                        <div class="tour-listing wow fadeInUp animated "
-                                            data-wow-delay="0.3s">
-                                            <a href="{{route('page.package-details')}}" class="tour-listing-image">
-                                                <div class="badge-top flex-two">
-                                                    <span class="feature">Featured</span>
-                                                    <div class="badge-media flex-five">
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002909"></i>5</span>
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002910"></i>2</span>
-                                                    </div>
-                                                </div>
-                                                <img src="{{ asset('public/frontend') }}/images/travel-list/3.jpg"
-                                                    alt="Image Listing">
-
-                                            </a>
-                                            <div class="tour-listing-content">
-                                                <span class="tag-listing">Hot sell</span>
-                                                <span class="map"><i class="icon-Vector4"></i>United States
-                                                    USA</span>
-                                                <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days
-                                                        and 6 nights
-                                                        From Moscow</a>
-                                                </h3>
-                                                <div class="review">
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <span>(1 Review)</span>
-                                                </div>
-                                                <div class="icon-box flex-three">
-                                                    <div class="icons flex-three">
-                                                        <i class="icon-time-left"></i>
-                                                        <span>5 days</span>
-                                                    </div>
-                                                    <div class="icons flex-three">
-                                                        <svg width="21" height="16" viewBox="0 0 21 16"
-                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M4.34766 4.79761C4.34766 2.94013 5.85346 1.43433 7.71094 1.43433C9.56841 1.43433 11.0742 2.94013 11.0742 4.79761C11.0742 6.65508 9.56841 8.16089 7.71094 8.16089C5.85346 8.16089 4.34766 6.65508 4.34766 4.79761Z"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M9.5977 15.1797H2.46098C1.34827 15.1797 0.558268 14.0954 0.898984 13.0362C1.80408 10.222 4.57804 8.18566 7.69301 8.18566C9.17897 8.18566 10.5566 8.64906 11.6895 9.43922"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M17.1035 15.1797V9.02734"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M20.1797 12.1035H14.0273"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                        </svg>
-                                                        <span>12 Person</span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-two">
-                                                    <div class="price-box flex-three">
-                                                        <p>From <span class="price-sale">$169.00</span></p>
-                                                        <span class="price">$199.00</span>
-                                                    </div>
-                                                    <div class="icon-bookmark">
-                                                        <i class="icon-Vector-151"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-lg-3">
-                                        <div class="tour-listing wow fadeInUp animated "
-                                            data-wow-delay="0.4s">
-                                            <a href="{{route('page.package-details')}}" class="tour-listing-image">
-                                                <div class="badge-top flex-two">
-                                                    <span class="feature">Featured</span>
-                                                    <div class="badge-media flex-five">
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002909"></i>5</span>
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002910"></i>2</span>
-                                                    </div>
-                                                </div>
-                                                <img src="{{ asset('public/frontend') }}/images/travel-list/4.jpg"
-                                                    alt="Image Listing">
-
-                                            </a>
-                                            <div class="tour-listing-content">
-                                                <span class="tag-listing">Bestseller</span>
-                                                <span class="map"><i class="icon-Vector4"></i>United States
-                                                    USA</span>
-                                                <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days
-                                                        and 6 nights
-                                                        From Moscow</a>
-                                                </h3>
-                                                <div class="review">
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <span>(1 Review)</span>
-                                                </div>
-                                                <div class="icon-box flex-three">
-                                                    <div class="icons flex-three">
-                                                        <i class="icon-time-left"></i>
-                                                        <span>5 days</span>
-                                                    </div>
-                                                    <div class="icons flex-three">
-                                                        <svg width="21" height="16" viewBox="0 0 21 16"
-                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M4.34766 4.79761C4.34766 2.94013 5.85346 1.43433 7.71094 1.43433C9.56841 1.43433 11.0742 2.94013 11.0742 4.79761C11.0742 6.65508 9.56841 8.16089 7.71094 8.16089C5.85346 8.16089 4.34766 6.65508 4.34766 4.79761Z"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M9.5977 15.1797H2.46098C1.34827 15.1797 0.558268 14.0954 0.898984 13.0362C1.80408 10.222 4.57804 8.18566 7.69301 8.18566C9.17897 8.18566 10.5566 8.64906 11.6895 9.43922"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M17.1035 15.1797V9.02734"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M20.1797 12.1035H14.0273"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                        </svg>
-                                                        <span>12 Person</span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-two">
-                                                    <div class="price-box flex-three">
-                                                        <p>From <span class="price-sale">$169.00</span></p>
-                                                        <span class="price">$199.00</span>
-                                                    </div>
-                                                    <div class="icon-bookmark">
-                                                        <i class="icon-Vector-151"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-                                <div class="row wow fadeInUp">
-                                    <div class="col-lg-12 center mt-44">
-                                        <a href="tour-archieve.html" class="btn-main">
-                                            <p class="btn-main-text">View all tour</p>
-                                            <p class="iconer">
-                                                <i class="icon-13"></i>
-                                            </p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="london-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                                <div class="row">
-                                    <div class="col-sm-6 col-lg-3">
-                                        <div class="tour-listing">
-                                            <a href="{{route('page.package-details')}}" class="tour-listing-image">
-                                                <div class="badge-top flex-two">
-                                                    <span class="feature">Featured</span>
-                                                    <div class="badge-media flex-five">
-                                                        <span class="media"><i class="icon-Group-1000002909"></i>5</span>
-                                                        <span class="media"><i class="icon-Group-1000002910"></i>2</span>
-                                                    </div>
-                                                </div>
-                                                <img src="{{ asset('public/frontend') }}/images/travel-list/1.jpg" alt="Image Listing">
-
-                                            </a>
-                                            <div class="tour-listing-content">
-                                                <span class="tag-listing">Bestseller</span>
-                                                <span class="map"><i class="icon-Vector4"></i>United States
-                                                    USA</span>
-                                                <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days
-                                                        and 6 nights
-                                                        From Moscow</a>
-                                                </h3>
-                                                <div class="review">
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <span>(1 Review)</span>
-                                                </div>
-                                                <div class="icon-box flex-three">
-                                                    <div class="icons flex-three">
-                                                        <i class="icon-time-left"></i>
-                                                        <span>5 days</span>
-                                                    </div>
-                                                    <div class="icons flex-three">
-                                                        <svg width="21" height="16" viewBox="0 0 21 16"
-                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M4.34766 4.79761C4.34766 2.94013 5.85346 1.43433 7.71094 1.43433C9.56841 1.43433 11.0742 2.94013 11.0742 4.79761C11.0742 6.65508 9.56841 8.16089 7.71094 8.16089C5.85346 8.16089 4.34766 6.65508 4.34766 4.79761Z"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M9.5977 15.1797H2.46098C1.34827 15.1797 0.558268 14.0954 0.898984 13.0362C1.80408 10.222 4.57804 8.18566 7.69301 8.18566C9.17897 8.18566 10.5566 8.64906 11.6895 9.43922"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M17.1035 15.1797V9.02734"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M20.1797 12.1035H14.0273"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                        </svg>
-                                                        <span>12 Person</span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-two">
-                                                    <div class="price-box flex-three">
-                                                        <p>From <span class="price-sale">$169.00</span></p>
-                                                        <span class="price">$199.00</span>
-                                                    </div>
-                                                    <div class="icon-bookmark">
-                                                        <i class="icon-Vector-151"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-lg-3">
-                                        <div class="tour-listing">
-                                            <a href="{{route('page.package-details')}}" class="tour-listing-image">
-                                                <div class="badge-top flex-two">
-                                                    <span class="feature">Featured</span>
-                                                    <div class="badge-media flex-five">
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002909"></i>5</span>
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002910"></i>2</span>
-                                                    </div>
-                                                </div>
-                                                <img src="{{ asset('public/frontend') }}/images/travel-list/2.jpg"
-                                                    alt="Image Listing">
-
-                                            </a>
-                                            <div class="tour-listing-content">
-                                                <span class="tag-listing">Trending</span>
-                                                <span class="map"><i class="icon-Vector4"></i>United States
-                                                    USA</span>
-                                                <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days
-                                                        and 6 nights
-                                                        From Moscow</a>
-                                                </h3>
-                                                <div class="review">
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <span>(1 Review)</span>
-                                                </div>
-                                                <div class="icon-box flex-three">
-                                                    <div class="icons flex-three">
-                                                        <i class="icon-time-left"></i>
-                                                        <span>5 days</span>
-                                                    </div>
-                                                    <div class="icons flex-three">
-                                                        <svg width="21" height="16" viewBox="0 0 21 16"
-                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M4.34766 4.79761C4.34766 2.94013 5.85346 1.43433 7.71094 1.43433C9.56841 1.43433 11.0742 2.94013 11.0742 4.79761C11.0742 6.65508 9.56841 8.16089 7.71094 8.16089C5.85346 8.16089 4.34766 6.65508 4.34766 4.79761Z"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M9.5977 15.1797H2.46098C1.34827 15.1797 0.558268 14.0954 0.898984 13.0362C1.80408 10.222 4.57804 8.18566 7.69301 8.18566C9.17897 8.18566 10.5566 8.64906 11.6895 9.43922"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M17.1035 15.1797V9.02734"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M20.1797 12.1035H14.0273"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                        </svg>
-                                                        <span>12 Person</span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-two">
-                                                    <div class="price-box flex-three">
-                                                        <p>From <span class="price-sale">$169.00</span></p>
-                                                        <span class="price">$199.00</span>
-                                                    </div>
-                                                    <div class="icon-bookmark">
-                                                        <i class="icon-Vector-151"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-lg-3">
-                                        <div class="tour-listing">
-                                            <a href="{{route('page.package-details')}}" class="tour-listing-image">
-                                                <div class="badge-top flex-two">
-                                                    <span class="feature">Featured</span>
-                                                    <div class="badge-media flex-five">
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002909"></i>5</span>
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002910"></i>2</span>
-                                                    </div>
-                                                </div>
-                                                <img src="{{ asset('public/frontend') }}/images/travel-list/3.jpg"
-                                                    alt="Image Listing">
-
-                                            </a>
-                                            <div class="tour-listing-content">
-                                                <span class="tag-listing">Hot sell</span>
-                                                <span class="map"><i class="icon-Vector4"></i>United States
-                                                    USA</span>
-                                                <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days
-                                                        and 6 nights
-                                                        From Moscow</a>
-                                                </h3>
-                                                <div class="review">
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <span>(1 Review)</span>
-                                                </div>
-                                                <div class="icon-box flex-three">
-                                                    <div class="icons flex-three">
-                                                        <i class="icon-time-left"></i>
-                                                        <span>5 days</span>
-                                                    </div>
-                                                    <div class="icons flex-three">
-                                                        <svg width="21" height="16" viewBox="0 0 21 16"
-                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M4.34766 4.79761C4.34766 2.94013 5.85346 1.43433 7.71094 1.43433C9.56841 1.43433 11.0742 2.94013 11.0742 4.79761C11.0742 6.65508 9.56841 8.16089 7.71094 8.16089C5.85346 8.16089 4.34766 6.65508 4.34766 4.79761Z"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M9.5977 15.1797H2.46098C1.34827 15.1797 0.558268 14.0954 0.898984 13.0362C1.80408 10.222 4.57804 8.18566 7.69301 8.18566C9.17897 8.18566 10.5566 8.64906 11.6895 9.43922"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M17.1035 15.1797V9.02734"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M20.1797 12.1035H14.0273"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                        </svg>
-                                                        <span>12 Person</span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-two">
-                                                    <div class="price-box flex-three">
-                                                        <p>From <span class="price-sale">$169.00</span></p>
-                                                        <span class="price">$199.00</span>
-                                                    </div>
-                                                    <div class="icon-bookmark">
-                                                        <i class="icon-Vector-151"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-lg-3">
-                                        <div class="tour-listing">
-                                            <a href="{{route('page.package-details')}}" class="tour-listing-image">
-                                                <div class="badge-top flex-two">
-                                                    <span class="feature">Featured</span>
-                                                    <div class="badge-media flex-five">
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002909"></i>5</span>
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002910"></i>2</span>
-                                                    </div>
-                                                </div>
-                                                <img src="{{ asset('public/frontend') }}/images/travel-list/4.jpg"
-                                                    alt="Image Listing">
-
-                                            </a>
-                                            <div class="tour-listing-content">
-                                                <span class="tag-listing">Bestseller</span>
-                                                <span class="map"><i class="icon-Vector4"></i>United States
-                                                    USA</span>
-                                                <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days
-                                                        and 6 nights
-                                                        From Moscow</a>
-                                                </h3>
-                                                <div class="review">
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <span>(1 Review)</span>
-                                                </div>
-                                                <div class="icon-box flex-three">
-                                                    <div class="icons flex-three">
-                                                        <i class="icon-time-left"></i>
-                                                        <span>5 days</span>
-                                                    </div>
-                                                    <div class="icons flex-three">
-                                                        <svg width="21" height="16" viewBox="0 0 21 16"
-                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M4.34766 4.79761C4.34766 2.94013 5.85346 1.43433 7.71094 1.43433C9.56841 1.43433 11.0742 2.94013 11.0742 4.79761C11.0742 6.65508 9.56841 8.16089 7.71094 8.16089C5.85346 8.16089 4.34766 6.65508 4.34766 4.79761Z"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M9.5977 15.1797H2.46098C1.34827 15.1797 0.558268 14.0954 0.898984 13.0362C1.80408 10.222 4.57804 8.18566 7.69301 8.18566C9.17897 8.18566 10.5566 8.64906 11.6895 9.43922"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M17.1035 15.1797V9.02734"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M20.1797 12.1035H14.0273"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                        </svg>
-                                                        <span>12 Person</span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-two">
-                                                    <div class="price-box flex-three">
-                                                        <p>From <span class="price-sale">$169.00</span></p>
-                                                        <span class="price">$199.00</span>
-                                                    </div>
-                                                    <div class="icon-bookmark">
-                                                        <i class="icon-Vector-151"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12 center mt-44">
-                                        <a href="tour-archieve.html" class="btn-main">
-                                            <p class="btn-main-text">View all tour</p>
-                                            <p class="iconer">
-                                                <i class="icon-13"></i>
-                                            </p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="tokyo-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-                                <div class="row">
-                                    <div class="col-sm-6 col-lg-3">
-                                        <div class="tour-listing">
-                                            <a href="{{route('page.package-details')}}" class="tour-listing-image">
-                                                <div class="badge-top flex-two">
-                                                    <span class="feature">Featured</span>
-                                                    <div class="badge-media flex-five">
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002909"></i>5</span>
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002910"></i>2</span>
-                                                    </div>
-                                                </div>
-                                                <img src="{{ asset('public/frontend') }}/images/travel-list/1.jpg"
-                                                    alt="Image Listing">
-
-                                            </a>
-                                            <div class="tour-listing-content">
-                                                <span class="tag-listing">Bestseller</span>
-                                                <span class="map"><i class="icon-Vector4"></i>United States
-                                                    USA</span>
-                                                <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days
-                                                        and 6 nights
-                                                        From Moscow</a>
-                                                </h3>
-                                                <div class="review">
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <span>(1 Review)</span>
-                                                </div>
-                                                <div class="icon-box flex-three">
-                                                    <div class="icons flex-three">
-                                                        <i class="icon-time-left"></i>
-                                                        <span>5 days</span>
-                                                    </div>
-                                                    <div class="icons flex-three">
-                                                        <svg width="21" height="16" viewBox="0 0 21 16"
-                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M4.34766 4.79761C4.34766 2.94013 5.85346 1.43433 7.71094 1.43433C9.56841 1.43433 11.0742 2.94013 11.0742 4.79761C11.0742 6.65508 9.56841 8.16089 7.71094 8.16089C5.85346 8.16089 4.34766 6.65508 4.34766 4.79761Z"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M9.5977 15.1797H2.46098C1.34827 15.1797 0.558268 14.0954 0.898984 13.0362C1.80408 10.222 4.57804 8.18566 7.69301 8.18566C9.17897 8.18566 10.5566 8.64906 11.6895 9.43922"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M17.1035 15.1797V9.02734"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M20.1797 12.1035H14.0273"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                        </svg>
-                                                        <span>12 Person</span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-two">
-                                                    <div class="price-box flex-three">
-                                                        <p>From <span class="price-sale">$169.00</span></p>
-                                                        <span class="price">$199.00</span>
-                                                    </div>
-                                                    <div class="icon-bookmark">
-                                                        <i class="icon-Vector-151"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-lg-3">
-                                        <div class="tour-listing">
-                                            <a href="{{route('page.package-details')}}" class="tour-listing-image">
-                                                <div class="badge-top flex-two">
-                                                    <span class="feature">Featured</span>
-                                                    <div class="badge-media flex-five">
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002909"></i>5</span>
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002910"></i>2</span>
-                                                    </div>
-                                                </div>
-                                                <img src="{{ asset('public/frontend') }}/images/travel-list/2.jpg"
-                                                    alt="Image Listing">
-
-                                            </a>
-                                            <div class="tour-listing-content">
-                                                <span class="tag-listing">Trending</span>
-                                                <span class="map"><i class="icon-Vector4"></i>United States
-                                                    USA</span>
-                                                <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days
-                                                        and 6 nights
-                                                        From Moscow</a>
-                                                </h3>
-                                                <div class="review">
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <span>(1 Review)</span>
-                                                </div>
-                                                <div class="icon-box flex-three">
-                                                    <div class="icons flex-three">
-                                                        <i class="icon-time-left"></i>
-                                                        <span>5 days</span>
-                                                    </div>
-                                                    <div class="icons flex-three">
-                                                        <svg width="21" height="16" viewBox="0 0 21 16"
-                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M4.34766 4.79761C4.34766 2.94013 5.85346 1.43433 7.71094 1.43433C9.56841 1.43433 11.0742 2.94013 11.0742 4.79761C11.0742 6.65508 9.56841 8.16089 7.71094 8.16089C5.85346 8.16089 4.34766 6.65508 4.34766 4.79761Z"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M9.5977 15.1797H2.46098C1.34827 15.1797 0.558268 14.0954 0.898984 13.0362C1.80408 10.222 4.57804 8.18566 7.69301 8.18566C9.17897 8.18566 10.5566 8.64906 11.6895 9.43922"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M17.1035 15.1797V9.02734"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M20.1797 12.1035H14.0273"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                        </svg>
-                                                        <span>12 Person</span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-two">
-                                                    <div class="price-box flex-three">
-                                                        <p>From <span class="price-sale">$169.00</span></p>
-                                                        <span class="price">$199.00</span>
-                                                    </div>
-                                                    <div class="icon-bookmark">
-                                                        <i class="icon-Vector-151"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-lg-3">
-                                        <div class="tour-listing">
-                                            <a href="{{route('page.package-details')}}" class="tour-listing-image">
-                                                <div class="badge-top flex-two">
-                                                    <span class="feature">Featured</span>
-                                                    <div class="badge-media flex-five">
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002909"></i>5</span>
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002910"></i>2</span>
-                                                    </div>
-                                                </div>
-                                                <img src="{{ asset('public/frontend') }}/images/travel-list/3.jpg"
-                                                    alt="Image Listing">
-
-                                            </a>
-                                            <div class="tour-listing-content">
-                                                <span class="tag-listing">Hot sell</span>
-                                                <span class="map"><i class="icon-Vector4"></i>United States
-                                                    USA</span>
-                                                <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days
-                                                        and 6 nights
-                                                        From Moscow</a>
-                                                </h3>
-                                                <div class="review">
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <span>(1 Review)</span>
-                                                </div>
-                                                <div class="icon-box flex-three">
-                                                    <div class="icons flex-three">
-                                                        <i class="icon-time-left"></i>
-                                                        <span>5 days</span>
-                                                    </div>
-                                                    <div class="icons flex-three">
-                                                        <svg width="21" height="16" viewBox="0 0 21 16"
-                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M4.34766 4.79761C4.34766 2.94013 5.85346 1.43433 7.71094 1.43433C9.56841 1.43433 11.0742 2.94013 11.0742 4.79761C11.0742 6.65508 9.56841 8.16089 7.71094 8.16089C5.85346 8.16089 4.34766 6.65508 4.34766 4.79761Z"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M9.5977 15.1797H2.46098C1.34827 15.1797 0.558268 14.0954 0.898984 13.0362C1.80408 10.222 4.57804 8.18566 7.69301 8.18566C9.17897 8.18566 10.5566 8.64906 11.6895 9.43922"
-                                                                stroke="currentColor" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M17.1035 15.1797V9.02734"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M20.1797 12.1035H14.0273"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                        </svg>
-                                                        <span>12 Person</span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-two">
-                                                    <div class="price-box flex-three">
-                                                        <p>From <span class="price-sale">$169.00</span></p>
-                                                        <span class="price">$199.00</span>
-                                                    </div>
-                                                    <div class="icon-bookmark">
-                                                        <i class="icon-Vector-151"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-lg-3">
-                                        <div class="tour-listing">
-                                            <a href="{{route('page.package-details')}}" class="tour-listing-image">
-                                                <div class="badge-top flex-two">
-                                                    <span class="feature">Featured</span>
-                                                    <div class="badge-media flex-five">
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002909"></i>5</span>
-                                                        <span class="media"><i
-                                                                class="icon-Group-1000002910"></i>2</span>
-                                                    </div>
-                                                </div>
-                                                <img src="{{ asset('public/frontend') }}/images/travel-list/4.jpg"
-                                                    alt="Image Listing">
-
-                                            </a>
-                                            <div class="tour-listing-content">
-                                                <span class="tag-listing">Bestseller</span>
-                                                <span class="map"><i class="icon-Vector4"></i>United States
-                                                    USA</span>
-                                                <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days
-                                                        and 6 nights
-                                                        From Moscow</a>
-                                                </h3>
-                                                <div class="review">
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <i class="icon-Star"></i>
-                                                    <span>(1 Review)</span>
-                                                </div>
-                                                <div class="icon-box flex-three">
-                                                    <div class="icons flex-three">
-                                                        <i class="icon-time-left"></i>
-                                                        <span>5 days</span>
-                                                    </div>
-                                                    <div class="icons flex-three">
-                                                        <svg width="21" height="16" viewBox="0 0 21 16"
-                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M4.34766 4.79761C4.34766 2.94013 5.85346 1.43433 7.71094 1.43433C9.56841 1.43433 11.0742 2.94013 11.0742 4.79761C11.0742 6.65508 9.56841 8.16089 7.71094 8.16089C5.85346 8.16089 4.34766 6.65508 4.34766 4.79761Z"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M9.5977 15.1797H2.46098C1.34827 15.1797 0.558268 14.0954 0.898984 13.0362C1.80408 10.222 4.57804 8.18566 7.69301 8.18566C9.17897 8.18566 10.5566 8.64906 11.6895 9.43922"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M17.1035 15.1797V9.02734"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M20.1797 12.1035H14.0273"
-                                                                stroke="#4DA528" stroke-width="1.7"
-                                                                stroke-miterlimit="10"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                        </svg>
-                                                        <span>12 Person</span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-two">
-                                                    <div class="price-box flex-three">
-                                                        <p>From <span class="price-sale">$169.00</span></p>
-                                                        <span class="price">$199.00</span>
-                                                    </div>
-                                                    <div class="icon-bookmark">
-                                                        <i class="icon-Vector-151"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12 center mt-44">
-                                        <a href="tour-archieve.html" class="btn-main">
-                                            <p class="btn-main-text">View all tour</p>
-                                            <p class="iconer">
-                                                <i class="icon-13"></i>
-                                            </p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
     <!-- Widget Tourpackage -->
@@ -1825,22 +906,16 @@
                 <div class="col-lg-5">
                     <div class="content">
                         <div class="mb-50">
-                            <span class="sub-title-heading text-main mb-15 fadeInUp wow">Explore the
-                                world</span>
-                            <h2 class="title-heading mb-32 fadeInUp wow">Amazing Featured Tour<span
-                                    class="text-gray font-yes "> Package</span> the world</h2>
-                            <p class="des-heading fadeInUp wow">Welcome to our Print 128 website! We are a
-                                professional
-                                company that offers a wide range of printing</p>
+                            <span class="sub-title-heading text-main mb-15 fadeInUp wow">Explore the world</span>
+                            <h2 class="title-heading mb-32 fadeInUp wow">Amazing Featured Tour<span class="text-gray font-yes "> Package</span> the world</h2>
+                            <p class="des-heading fadeInUp wow">Welcome to our Print 128 website! We are a professional company that offers a wide range of printing</p>
                         </div>
                         <div class="inner-content flex-three">
                             <div class="offer fadeInUp wow">
                                 <span class="number">25 <span>% off</span></span>
 
                             </div>
-                            <p class="font-italic fadeInUp wow">Discover Great <span
-                                    class="text-main">Discount</span>
-                                Deals Around the World</p>
+                            <p class="font-italic fadeInUp wow">Discover Great <span class="text-main">Discount</span> Deals Around the World</p>
 
                         </div>
                         <div class="count-dow-wrap flex-three mb-50">
@@ -1873,7 +948,7 @@
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
                                     <div class="tour-listing">
-                                        <a href="{{route('page.package-details')}}" class="tour-listing-image">
+                                        <a href="{{route('page.package-details',  'Hello')}}" class="tour-listing-image">
                                             <div class="badge-top flex-two">
                                                 <span class="feature">Featured</span>
                                                 <div class="badge-media flex-five">
@@ -1891,7 +966,7 @@
                                             <span class="tag-listing">Bestseller</span>
                                             <span class="map"><i class="icon-Vector4"></i>United States
                                                 USA</span>
-                                            <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days and
+                                            <h3 class="title-tour-list"><a href="{{route('page.package-details',  'Hello')}}">Days and
                                                     6 nights From
                                                     Moscow</a>
                                             </h3>
@@ -1947,7 +1022,7 @@
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="tour-listing">
-                                        <a href="{{route('page.package-details')}}" class="tour-listing-image">
+                                        <a href="{{route('page.package-details',  'Hello')}}" class="tour-listing-image">
                                             <div class="badge-top flex-two">
                                                 <span class="feature">Featured</span>
                                                 <div class="badge-media flex-five">
@@ -1965,7 +1040,7 @@
                                             <span class="tag-listing">Bestseller</span>
                                             <span class="map"><i class="icon-Vector4"></i>United States
                                                 USA</span>
-                                            <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days and
+                                            <h3 class="title-tour-list"><a href="{{route('page.package-details',  'Hello')}}">Days and
                                                     6 nights From
                                                     Moscow</a>
                                             </h3>
@@ -2021,7 +1096,7 @@
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="tour-listing">
-                                        <a href="{{route('page.package-details')}}" class="tour-listing-image">
+                                        <a href="{{route('page.package-details',  'Hello')}}" class="tour-listing-image">
                                             <div class="badge-top flex-two">
                                                 <span class="feature">Featured</span>
                                                 <div class="badge-media flex-five">
@@ -2039,7 +1114,7 @@
                                             <span class="tag-listing">Bestseller</span>
                                             <span class="map"><i class="icon-Vector4"></i>United States
                                                 USA</span>
-                                            <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days and
+                                            <h3 class="title-tour-list"><a href="{{route('page.package-details',  'Hello')}}">Days and
                                                     6 nights From
                                                     Moscow</a>
                                             </h3>
@@ -2095,7 +1170,7 @@
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="tour-listing">
-                                        <a href="{{route('page.package-details')}}" class="tour-listing-image">
+                                        <a href="{{route('page.package-details',  'Hello')}}" class="tour-listing-image">
                                             <div class="badge-top flex-two">
                                                 <span class="feature">Featured</span>
                                                 <div class="badge-media flex-five">
@@ -2113,7 +1188,7 @@
                                             <span class="tag-listing">Bestseller</span>
                                             <span class="map"><i class="icon-Vector4"></i>United States
                                                 USA</span>
-                                            <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days and
+                                            <h3 class="title-tour-list"><a href="{{route('page.package-details',  'Hello')}}">Days and
                                                     6 nights From
                                                     Moscow</a>
                                             </h3>
@@ -2169,7 +1244,7 @@
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="tour-listing">
-                                        <a href="{{route('page.package-details')}}" class="tour-listing-image">
+                                        <a href="{{route('page.package-details',  'Hello')}}" class="tour-listing-image">
                                             <div class="badge-top flex-two">
                                                 <span class="feature">Featured</span>
                                                 <div class="badge-media flex-five">
@@ -2187,7 +1262,7 @@
                                             <span class="tag-listing">Bestseller</span>
                                             <span class="map"><i class="icon-Vector4"></i>United States
                                                 USA</span>
-                                            <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days and
+                                            <h3 class="title-tour-list"><a href="{{route('page.package-details',  'Hello')}}">Days and
                                                     6 nights From
                                                     Moscow</a>
                                             </h3>
@@ -2243,7 +1318,7 @@
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="tour-listing">
-                                        <a href="{{route('page.package-details')}}" class="tour-listing-image">
+                                        <a href="{{route('page.package-details',  'Hello')}}" class="tour-listing-image">
                                             <div class="badge-top flex-two">
                                                 <span class="feature">Featured</span>
                                                 <div class="badge-media flex-five">
@@ -2261,7 +1336,7 @@
                                             <span class="tag-listing">Bestseller</span>
                                             <span class="map"><i class="icon-Vector4"></i>United States
                                                 USA</span>
-                                            <h3 class="title-tour-list"><a href="{{route('page.package-details')}}">Days and
+                                            <h3 class="title-tour-list"><a href="{{route('page.package-details',  'Hello')}}">Days and
                                                     6 nights From
                                                     Moscow</a>
                                             </h3>
@@ -2672,104 +1747,104 @@
                                 <div class="row">
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour1.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour2.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour3.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour4.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour5.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour6.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour7.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour8.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
@@ -2780,104 +1855,104 @@
                                 <div class="row">
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour1.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour2.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour3.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour4.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour5.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour6.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour7.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour8.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
@@ -2888,104 +1963,104 @@
                                 <div class="row">
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour1.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour2.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour3.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour4.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour5.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour6.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour7.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour8.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
@@ -2996,104 +2071,104 @@
                                 <div class="row">
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour1.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour2.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour3.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour4.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour5.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour6.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour7.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-6 col-lg-3">
                                         <div class="tf-adventure flex-three mb-43">
-                                            <a href="{{route('page.package-details')}}" class="adventure-image">
+                                            <a href="{{route('page.package-details',  'Hello')}}" class="adventure-image">
                                                 <img src="{{ asset('public/frontend') }}/images/tour/tour8.jpg" alt="">
                                             </a>
                                             <div class="adventure-image">
                                                 <span class="tour-ad">(3 Tour)</span>
                                                 <h6 class="title-ad"><a
-                                                        href="{{route('page.package-details')}}">Switzerland</a></h6>
+                                                        href="{{route('page.package-details',  'Hello')}}">Switzerland</a></h6>
                                                 <p class="price-ad text-main">$169.00</p>
                                             </div>
                                         </div>
@@ -3337,8 +2412,7 @@
                             <p class="des">Business is the activity of making on cing or buying and selling
                                 pro
                             </p>
-                            <a href="blog-details.html" class="btn-read-more">Read More <i
-                                    class="icon-Vector-4"></i></a>
+                            <a href="blog-details.html" class="btn-read-more">Read More <i class="icon-Vector-4"></i></a>
                         </div>
                     </div>
                 </div>

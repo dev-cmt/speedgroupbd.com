@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use App\Models\Continent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CountryController extends Controller
 {
@@ -12,10 +13,10 @@ class CountryController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    $countries = Country::with(['continent', 'places'])->withCount('places')->paginate(10);
-    return view('countries.index', compact('countries'));
-}
+    {
+        $countries = Country::with(['continent', 'places'])->withCount('places')->get();
+        return view('countries.index', compact('countries'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -34,10 +35,22 @@ class CountryController extends Controller
         $request->validate([
             'continent_id' => 'required|exists:continents,id',
             'name' => 'required|string|max:255|unique:countries',
-            'slug' => 'required|string|max:255|unique:countries',
+            'flag' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        Country::create($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('flag')) {
+            $file = $request->file('flag');
+            $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
+
+            // Move to public/flags
+            $file->move(public_path('flags'), $filename);
+
+            $data['flag'] = 'flags/' . $filename; // save relative path
+        }
+
+        Country::create($data);
 
         return redirect()->route('countries.index')
             ->with('success', 'Country created successfully.');
@@ -72,7 +85,6 @@ class CountryController extends Controller
         $request->validate([
             'continent_id' => 'required|exists:continents,id',
             'name' => 'required|string|max:255|unique:countries,name,' . $country->id,
-            'slug' => 'required|string|max:255|unique:countries,slug,' . $country->id,
             'description' => 'nullable|string',
             'flag' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -80,13 +92,17 @@ class CountryController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('flag')) {
-            // Delete old flag if exists
-            if ($country->flag) {
-                Storage::disk('public')->delete($country->flag);
+            // Delete old file if exists
+            if ($country->flag && file_exists(public_path($country->flag))) {
+                unlink(public_path($country->flag));
             }
 
-            $flagPath = $request->file('flag')->store('flags', 'public');
-            $data['flag'] = $flagPath;
+            $file = $request->file('flag');
+            $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
+
+            $file->move(public_path('flags'), $filename);
+
+            $data['flag'] = 'flags/' . $filename;
         }
 
         $country->update($data);

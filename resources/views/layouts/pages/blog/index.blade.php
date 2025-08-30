@@ -5,9 +5,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Event List<span class="bg-blue-500 text-white rounded px-1 text-xs py-0.5"></span></h4>
-                    @can('Event create')
                     <a href="{{ route('blog.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i><span class="btn-icon-add"></span>Add New</a>
-                    @endcan
                 </div>
 
                 <div class="card-body">

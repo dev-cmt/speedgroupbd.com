@@ -14,7 +14,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContinentController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\PlaceController;
-use App\Http\Controllers\TourPackageController;
+use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PackageIncludeController;
 use App\Http\Controllers\BookingController;
 
@@ -41,8 +41,8 @@ Route::get('comming/soon', [HomeController::class, 'comming_soon'])->name('commi
 //______________ ABOUT US
 Route::get('page/about-us', [HomeController::class, 'about'])->name('page.about-us');
 //______________ PACKAGE
-Route::get('page/package', [HomeController::class, 'package'])->name('page.package');
-Route::get('page/package-details', [HomeController::class, 'packageDetails'])->name('page.package-details');
+Route::get('/package/{country?}', [HomeController::class, 'package'])->name('page.package');
+Route::get('page/package-details/{slug}', [HomeController::class, 'packageDetails'])->name('page.package-details');
 
 Route::get('/package-details-multicity', function () {
     return view('frontend.pages.package-details-multicity');
@@ -151,10 +151,7 @@ Route::group(['middleware' => ['auth']], function(){
 
     Route::get('/download/{id}', [GalleryController::class, 'downloadFile'])->name('gallery.download');
     Route::get('/dowloads', [GalleryController::class, 'dowloads']);
-
-    Route::get('dashboard-gallery/all',[GalleryController::class,'bvGallery'])->name('dashboard-gallery.all');
-    Route::get('dashboard-gallery/{id}/show',[GalleryController::class,'bvGalleryImage'])->name('dashboard-gallery.images');
-
+    
     //-- BLOG
     Route::get('blog-news/index', [BlogController::class,'index'])->name('blog.index');
     Route::get('blog-news/create', [BlogController::class,'create'])->name('blog.create');
@@ -174,27 +171,19 @@ Route::group(['middleware' => ['auth']], function(){
     Route::resource('continents', ContinentController::class);
     Route::resource('countries', CountryController::class);
     Route::resource('places', PlaceController::class);
-    Route::resource('tour-packages', TourPackageController::class);
+    Route::resource('packages', PackageController::class);
     Route::resource('package-includes', PackageIncludeController::class);
     Route::resource('bookings', BookingController::class);
+
+    Route::delete('packages/images/{image}', [PackageController::class, 'deleteImage'])->name('packages.images.delete');
 
 
     // Additional custom routes
     Route::get('countries/by-continent/{continentId}', [CountryController::class, 'getByContinent']);
     Route::get('places/by-country/{countryId}', [PlaceController::class, 'getByCountry']);
-    Route::get('packages/by-place/{placeId}', [TourPackageController::class, 'getByPlace']);
+    Route::get('packages/by-place/{placeId}', [PackageController::class, 'getByPlace']);
     Route::get('includes/by-package/{packageId}', [PackageIncludeController::class, 'getByPackage']);
     Route::get('bookings/by-user/{userId}', [BookingController::class, 'getByUser']);
     Route::get('bookings/by-package/{packageId}', [BookingController::class, 'getByPackage']);
-
-    // Package page route (from your HTML)
-    Route::get('/packages', function () {
-        return view('packages.index'); // You'll need to create this view
-    })->name('page.package');
-
-    // Multi-city package route (from your HTML)
-    Route::get('/package-details-multicity', function () {
-        return view('packages.multicity'); // You'll need to create this view
-    })->name('page.package-details-multicity');
 
 });

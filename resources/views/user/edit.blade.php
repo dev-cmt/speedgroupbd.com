@@ -89,22 +89,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-lg-5 col-form-label">Member Type</label>
-                                    <div class="col-lg-7">
-                                        <select class="form-control default-select" name="member_type_id">
-                                            <option value="" selected>None</option>
-                                            @foreach($memberType as $item)
-                                            <option value="{{ $item->id }}" {{ $item->id == $user->member_type_id ? 'selected' : ''}}> {{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('member_type_id')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-group row">
                                     <label class="col-lg-5 col-form-label">Select Role</label>
                                     <div class="col-lg-7">
                                         <select class="form-control default-select" id="roles" name="roles">

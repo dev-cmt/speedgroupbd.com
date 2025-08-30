@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('package_includes', function (Blueprint $table) {
+        Schema::create('package_images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('package_id')->constrained('tour_packages')->onDelete('cascade');
-            $table->string('item');
+            $table->foreignId('package_id')->constrained()->onDelete('cascade');
+            $table->string('image_path')->nullable();
+            $table->boolean('is_default')->default(false);
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('package_includes');
+        Schema::dropIfExists('package_images');
     }
 };

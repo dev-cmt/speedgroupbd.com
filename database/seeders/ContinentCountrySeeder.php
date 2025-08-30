@@ -18,7 +18,7 @@ class ContinentCountrySeeder extends Seeder
         // Clear existing data
         DB::table('package_includes')->delete();
         DB::table('bookings')->delete();
-        DB::table('tour_packages')->delete();
+        DB::table('packages')->delete();
         DB::table('places')->delete();
         DB::table('countries')->delete();
         DB::table('continents')->delete();

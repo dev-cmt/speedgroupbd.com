@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 05, 2025 at 08:52 PM
+-- Host: 127.0.0.1:3308
+-- Generation Time: Aug 30, 2025 at 10:28 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `speedgroupbd`
+-- Database: `speedgroupbd.com`
 --
 
 -- --------------------------------------------------------
@@ -90,6 +90,24 @@ CREATE TABLE `blog_views` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `bookings`
+--
+
+CREATE TABLE `bookings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `package_id` bigint(20) UNSIGNED NOT NULL,
+  `start_date` date NOT NULL,
+  `persons` int(11) NOT NULL,
+  `total_cost` decimal(10,2) NOT NULL,
+  `status` enum('Pending','Confirmed','Cancelled','Completed') NOT NULL DEFAULT 'Pending',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `contacts`
 --
 
@@ -103,6 +121,72 @@ CREATE TABLE `contacts` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `continents`
+--
+
+CREATE TABLE `continents` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `continents`
+--
+
+INSERT INTO `continents` (`id`, `name`, `slug`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Asia', 'asia', 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(2, 'Europe', 'europe', 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(3, 'Middle East', 'middle-east', 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `countries`
+--
+
+CREATE TABLE `countries` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `continent_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `flag` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `countries`
+--
+
+INSERT INTO `countries` (`id`, `continent_id`, `name`, `slug`, `flag`, `description`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Nepal', 'nepal', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(2, 1, 'Maldives', 'maldives', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(3, 1, 'Srilanka', 'srilanka', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(4, 1, 'Malaysia', 'malaysia', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(5, 1, 'Singapore', 'singapore', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(6, 2, 'Finland', 'finland', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(7, 2, 'France', 'france', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(8, 2, 'Germany', 'germany', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(9, 2, 'Italy', 'italy', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(10, 2, 'Malta', 'malta', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(11, 2, 'Portugal', 'portugal', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(12, 3, 'Bahrain', 'bahrain', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(13, 3, 'Iran', 'iran', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(14, 3, 'Jordan', 'jordan', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(15, 3, 'Kuwait', 'kuwait', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(16, 3, 'Oman', 'oman', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(17, 3, 'Qatar', 'qatar', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(18, 1, 'Bangladesh', 'bangladesh', NULL, NULL, 1, '2025-08-30 14:26:32', '2025-08-30 14:26:32');
 
 -- --------------------------------------------------------
 
@@ -184,7 +268,15 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (11, '2024_08_13_062049_create_blog_posts_table', 1),
 (12, '2024_08_13_062126_create_blog_comments_table', 1),
 (13, '2024_08_13_062211_create_blog_views_table', 1),
-(14, '2024_08_13_062245_create_blog_shares_table', 1);
+(14, '2024_08_13_062245_create_blog_shares_table', 1),
+(15, '2025_08_26_063048_create_continents_table', 1),
+(16, '2025_08_26_063127_create_countries_table', 1),
+(17, '2025_08_26_064040_create_places_table', 1),
+(18, '2025_08_26_064221_create_packages_table', 1),
+(19, '2025_08_30_181609_create_package_images_table', 1),
+(20, '2025_08_30_192909_create_package_itineraries_table', 1),
+(21, '2025_08_31_064309_create_package_includes_table', 1),
+(22, '2025_08_31_064325_create_bookings_table', 1);
 
 -- --------------------------------------------------------
 
@@ -220,6 +312,76 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `packages`
+--
+
+CREATE TABLE `packages` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `place_id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `sale_price` decimal(10,2) DEFAULT NULL,
+  `duration` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `is_featured` tinyint(1) NOT NULL DEFAULT 0,
+  `is_bestseller` tinyint(1) NOT NULL DEFAULT 0,
+  `max_persons` int(11) NOT NULL DEFAULT 12,
+  `review_count` int(11) NOT NULL DEFAULT 1,
+  `rating` decimal(3,1) NOT NULL DEFAULT 5.0,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `package_images`
+--
+
+CREATE TABLE `package_images` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `package_id` bigint(20) UNSIGNED NOT NULL,
+  `image_path` varchar(255) DEFAULT NULL,
+  `is_default` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `package_includes`
+--
+
+CREATE TABLE `package_includes` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `package_id` bigint(20) UNSIGNED NOT NULL,
+  `item` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `package_itineraries`
+--
+
+CREATE TABLE `package_itineraries` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `package_id` bigint(20) UNSIGNED NOT NULL,
+  `day_number` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` longtext DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `password_resets`
 --
 
@@ -248,88 +410,39 @@ CREATE TABLE `permissions` (
 --
 
 INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'Member menu access', 'web', '2025-08-05 11:48:55', '2025-08-05 11:48:55'),
-(2, 'Payment menu access', 'web', '2025-08-05 11:48:55', '2025-08-05 11:48:55'),
-(3, 'Post menu access', 'web', '2025-08-05 11:48:55', '2025-08-05 11:48:55'),
-(4, 'Setting menu access', 'web', '2025-08-05 11:48:55', '2025-08-05 11:48:55'),
-(5, 'Member access', 'web', '2025-08-05 11:48:55', '2025-08-05 11:48:55'),
-(6, 'Member edit', 'web', '2025-08-05 11:48:55', '2025-08-05 11:48:55'),
-(7, 'Member view', 'web', '2025-08-05 11:48:55', '2025-08-05 11:48:55'),
-(8, 'Member delete', 'web', '2025-08-05 11:48:55', '2025-08-05 11:48:55'),
-(9, 'Member approve access', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(10, 'Member approved', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(11, 'Member approve record', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(12, 'CommitteeType access', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(13, 'CommitteeType create', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(14, 'CommitteeType edit', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(15, 'CommitteeType view', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(16, 'CommitteeType delete', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(17, 'MemberType access', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(18, 'MemberType create', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(19, 'MemberType edit', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(20, 'MemberType view', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(21, 'MemberType delete', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(22, 'Qualification access', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(23, 'Qualification create', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(24, 'Qualification edit', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(25, 'Qualification view', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(26, 'Qualification delete', 'web', '2025-08-05 11:48:56', '2025-08-05 11:48:56'),
-(27, 'Annual fees access', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(28, 'Annual fees approved', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(29, 'Annual fees record', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(30, 'Event fees access', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(31, 'Event fees approved', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(32, 'Event fees record', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(33, 'Membership fees access', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(34, 'Membership fees approved', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(35, 'Membership fees record', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(36, 'Pyment number access', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(37, 'Pyment number create', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(38, 'Pyment number edit', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(39, 'Pyment number view', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(40, 'Pyment number delete', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(41, 'Pyment fees access', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(42, 'Pyment annual fees', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(43, 'Pyment membership fees', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(44, 'Past access', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(45, 'Past create', 'web', '2025-08-05 11:48:57', '2025-08-05 11:48:57'),
-(46, 'Past edit', 'web', '2025-08-05 11:48:58', '2025-08-05 11:48:58'),
-(47, 'Past delete', 'web', '2025-08-05 11:48:58', '2025-08-05 11:48:58'),
-(48, 'Past member access', 'web', '2025-08-05 11:48:58', '2025-08-05 11:48:58'),
-(49, 'Renew member access', 'web', '2025-08-05 11:48:58', '2025-08-05 11:48:58'),
-(50, 'Gallery access', 'web', '2025-08-05 11:48:58', '2025-08-05 11:48:58'),
-(51, 'Gallery create', 'web', '2025-08-05 11:48:58', '2025-08-05 11:48:58'),
-(52, 'Gallery edit', 'web', '2025-08-05 11:48:58', '2025-08-05 11:48:58'),
-(53, 'Gallery delete', 'web', '2025-08-05 11:48:58', '2025-08-05 11:48:58'),
-(54, 'Blog access', 'web', '2025-08-05 11:48:58', '2025-08-05 11:48:58'),
-(55, 'Blog create', 'web', '2025-08-05 11:48:58', '2025-08-05 11:48:58'),
-(56, 'Blog edit', 'web', '2025-08-05 11:48:58', '2025-08-05 11:48:58'),
-(57, 'Blog delete', 'web', '2025-08-05 11:48:58', '2025-08-05 11:48:58'),
-(58, 'Event access', 'web', '2025-08-05 11:48:58', '2025-08-05 11:48:58'),
-(59, 'Event create', 'web', '2025-08-05 11:48:58', '2025-08-05 11:48:58'),
-(60, 'Event edit', 'web', '2025-08-05 11:48:58', '2025-08-05 11:48:58'),
-(61, 'Event delete', 'web', '2025-08-05 11:48:58', '2025-08-05 11:48:58'),
-(62, 'Contact access', 'web', '2025-08-05 11:48:58', '2025-08-05 11:48:58'),
-(63, 'Contact reply', 'web', '2025-08-05 11:48:59', '2025-08-05 11:48:59'),
-(64, 'Contact delete', 'web', '2025-08-05 11:48:59', '2025-08-05 11:48:59'),
-(65, 'Role access', 'web', '2025-08-05 11:48:59', '2025-08-05 11:48:59'),
-(66, 'Role create', 'web', '2025-08-05 11:48:59', '2025-08-05 11:48:59'),
-(67, 'Role edit', 'web', '2025-08-05 11:48:59', '2025-08-05 11:48:59'),
-(68, 'Role delete', 'web', '2025-08-05 11:48:59', '2025-08-05 11:48:59'),
-(69, 'User access', 'web', '2025-08-05 11:48:59', '2025-08-05 11:48:59'),
-(70, 'User create', 'web', '2025-08-05 11:48:59', '2025-08-05 11:48:59'),
-(71, 'User edit', 'web', '2025-08-05 11:48:59', '2025-08-05 11:48:59'),
-(72, 'User delete', 'web', '2025-08-05 11:48:59', '2025-08-05 11:48:59'),
-(73, 'Super-Admin', 'web', '2025-08-05 11:48:59', '2025-08-05 11:48:59'),
-(74, 'Admin', 'web', '2025-08-05 11:48:59', '2025-08-05 11:48:59'),
-(75, 'Member', 'web', '2025-08-05 11:48:59', '2025-08-05 11:48:59'),
-(76, 'Data Setting', 'web', '2025-08-05 11:48:59', '2025-08-05 11:48:59'),
-(77, 'Student Member', 'web', '2025-08-05 11:48:59', '2025-08-05 11:48:59'),
-(78, 'Candidate Member', 'web', '2025-08-05 11:48:59', '2025-08-05 11:48:59'),
-(79, 'Professional Member', 'web', '2025-08-05 11:49:00', '2025-08-05 11:49:00'),
-(80, 'Associate Member', 'web', '2025-08-05 11:49:00', '2025-08-05 11:49:00'),
-(81, 'Trade Member', 'web', '2025-08-05 11:49:00', '2025-08-05 11:49:00'),
-(82, 'Corporate Member', 'web', '2025-08-05 11:49:00', '2025-08-05 11:49:00');
+(1, 'Continent create', 'web', '2025-08-30 14:26:31', '2025-08-30 14:26:31'),
+(2, 'Payment menu access', 'web', '2025-08-30 14:26:31', '2025-08-30 14:26:31'),
+(3, 'Post menu access', 'web', '2025-08-30 14:26:31', '2025-08-30 14:26:31'),
+(4, 'Setting menu access', 'web', '2025-08-30 14:26:31', '2025-08-30 14:26:31'),
+(5, 'Gallery access', 'web', '2025-08-30 14:26:31', '2025-08-30 14:26:31'),
+(6, 'Gallery create', 'web', '2025-08-30 14:26:31', '2025-08-30 14:26:31'),
+(7, 'Gallery edit', 'web', '2025-08-30 14:26:31', '2025-08-30 14:26:31'),
+(8, 'Gallery delete', 'web', '2025-08-30 14:26:31', '2025-08-30 14:26:31'),
+(9, 'Blog access', 'web', '2025-08-30 14:26:31', '2025-08-30 14:26:31'),
+(10, 'Blog create', 'web', '2025-08-30 14:26:31', '2025-08-30 14:26:31'),
+(11, 'Blog edit', 'web', '2025-08-30 14:26:31', '2025-08-30 14:26:31'),
+(12, 'Blog delete', 'web', '2025-08-30 14:26:31', '2025-08-30 14:26:31'),
+(13, 'Contact access', 'web', '2025-08-30 14:26:31', '2025-08-30 14:26:31'),
+(14, 'Contact reply', 'web', '2025-08-30 14:26:31', '2025-08-30 14:26:31'),
+(15, 'Contact delete', 'web', '2025-08-30 14:26:31', '2025-08-30 14:26:31'),
+(16, 'Role access', 'web', '2025-08-30 14:26:31', '2025-08-30 14:26:31'),
+(17, 'Role create', 'web', '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(18, 'Role edit', 'web', '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(19, 'Role delete', 'web', '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(20, 'User access', 'web', '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(21, 'User create', 'web', '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(22, 'User edit', 'web', '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(23, 'User delete', 'web', '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(24, 'Super-Admin', 'web', '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(25, 'Admin', 'web', '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(26, 'Member', 'web', '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(27, 'Data Setting', 'web', '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(28, 'Student Member', 'web', '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(29, 'Candidate Member', 'web', '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(30, 'Professional Member', 'web', '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(31, 'Associate Member', 'web', '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(32, 'Trade Member', 'web', '2025-08-30 14:26:32', '2025-08-30 14:26:32'),
+(33, 'Corporate Member', 'web', '2025-08-30 14:26:32', '2025-08-30 14:26:32');
 
 -- --------------------------------------------------------
 
@@ -353,6 +466,24 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `places`
+--
+
+CREATE TABLE `places` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `country_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `slug` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `roles`
 --
 
@@ -369,7 +500,7 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'Super-Admin', 'web', '2025-08-05 11:48:55', '2025-08-05 11:48:55');
+(1, 'Super-Admin', 'web', '2025-08-30 14:26:31', '2025-08-30 14:26:31');
 
 -- --------------------------------------------------------
 
@@ -419,56 +550,7 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (30, 1),
 (31, 1),
 (32, 1),
-(33, 1),
-(34, 1),
-(35, 1),
-(36, 1),
-(37, 1),
-(38, 1),
-(39, 1),
-(40, 1),
-(41, 1),
-(42, 1),
-(43, 1),
-(44, 1),
-(45, 1),
-(46, 1),
-(47, 1),
-(48, 1),
-(49, 1),
-(50, 1),
-(51, 1),
-(52, 1),
-(53, 1),
-(54, 1),
-(55, 1),
-(56, 1),
-(57, 1),
-(58, 1),
-(59, 1),
-(60, 1),
-(61, 1),
-(62, 1),
-(63, 1),
-(64, 1),
-(65, 1),
-(66, 1),
-(67, 1),
-(68, 1),
-(69, 1),
-(70, 1),
-(71, 1),
-(72, 1),
-(73, 1),
-(74, 1),
-(75, 1),
-(76, 1),
-(77, 1),
-(78, 1),
-(79, 1),
-(80, 1),
-(81, 1),
-(82, 1);
+(33, 1);
 
 -- --------------------------------------------------------
 
@@ -484,13 +566,6 @@ CREATE TABLE `sessions` (
   `payload` longtext NOT NULL,
   `last_activity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `sessions`
---
-
-INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('Jg9PQX5sZEQT9EtTsva5b4oZy2eagLzgT9m5kUgX', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZjFqNk5FTTR3VWJvSVdSam9GQmtIMkdZcDBRNkxubHVkdUdYUkZtRSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTk6Imh0dHA6Ly9sb2NhbGhvc3Qvd2ViLXNwZWVkZ3JvdXBiZC9wYWNrYWdlLWRldGFpbHMtbXVsdGljaXR5Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1754419702);
 
 -- --------------------------------------------------------
 
@@ -521,7 +596,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `remember_token`, `profile_photo_path`, `status`, `is_admin`, `index`, `created_at`, `updated_at`) VALUES
-(1, 'BAFIITA', 'Admin', '2025-08-05 11:48:55', '$2y$12$GBGNLOdB4J5WSdHqIO/XveF8hF/O8rveXsDEDiTK.00Cr8wwvDX0i', NULL, NULL, NULL, NULL, 'fix/admin.jpg', 1, 1, NULL, '2025-08-05 11:48:55', '2025-08-05 11:48:55');
+(1, 'SG-BD Admin', 'Admin', '2025-08-30 14:26:31', '$2y$12$TCq2ipcOrJFByQcQlm3hjeXBgWWpTjaqz4.RwI8rRQxC53NYhXyqe', NULL, NULL, NULL, NULL, 'fix/admin.jpg', 1, 1, NULL, '2025-08-30 14:26:31', '2025-08-30 14:26:31');
 
 --
 -- Indexes for dumped tables
@@ -561,10 +636,33 @@ ALTER TABLE `blog_views`
   ADD KEY `blog_views_user_id_foreign` (`user_id`);
 
 --
+-- Indexes for table `bookings`
+--
+ALTER TABLE `bookings`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bookings_user_id_foreign` (`user_id`),
+  ADD KEY `bookings_package_id_foreign` (`package_id`);
+
+--
 -- Indexes for table `contacts`
 --
 ALTER TABLE `contacts`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `continents`
+--
+ALTER TABLE `continents`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `continents_slug_unique` (`slug`);
+
+--
+-- Indexes for table `countries`
+--
+ALTER TABLE `countries`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `countries_slug_unique` (`slug`),
+  ADD KEY `countries_continent_id_foreign` (`continent_id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -607,6 +705,35 @@ ALTER TABLE `model_has_roles`
   ADD KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`);
 
 --
+-- Indexes for table `packages`
+--
+ALTER TABLE `packages`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `packages_slug_unique` (`slug`),
+  ADD KEY `packages_place_id_foreign` (`place_id`);
+
+--
+-- Indexes for table `package_images`
+--
+ALTER TABLE `package_images`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `package_images_package_id_foreign` (`package_id`);
+
+--
+-- Indexes for table `package_includes`
+--
+ALTER TABLE `package_includes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `package_includes_package_id_foreign` (`package_id`);
+
+--
+-- Indexes for table `package_itineraries`
+--
+ALTER TABLE `package_itineraries`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `package_itineraries_package_id_foreign` (`package_id`);
+
+--
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
@@ -626,6 +753,14 @@ ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
+
+--
+-- Indexes for table `places`
+--
+ALTER TABLE `places`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `places_slug_unique` (`slug`),
+  ADD KEY `places_country_id_foreign` (`country_id`);
 
 --
 -- Indexes for table `roles`
@@ -685,10 +820,28 @@ ALTER TABLE `blog_views`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `bookings`
+--
+ALTER TABLE `bookings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `continents`
+--
+ALTER TABLE `continents`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `countries`
+--
+ALTER TABLE `countries`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -712,18 +865,48 @@ ALTER TABLE `gallery_images`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `packages`
+--
+ALTER TABLE `packages`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `package_images`
+--
+ALTER TABLE `package_images`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `package_includes`
+--
+ALTER TABLE `package_includes`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `package_itineraries`
+--
+ALTER TABLE `package_itineraries`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `places`
+--
+ALTER TABLE `places`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -770,6 +953,19 @@ ALTER TABLE `blog_views`
   ADD CONSTRAINT `blog_views_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
+-- Constraints for table `bookings`
+--
+ALTER TABLE `bookings`
+  ADD CONSTRAINT `bookings_package_id_foreign` FOREIGN KEY (`package_id`) REFERENCES `packages` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `bookings_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `countries`
+--
+ALTER TABLE `countries`
+  ADD CONSTRAINT `countries_continent_id_foreign` FOREIGN KEY (`continent_id`) REFERENCES `continents` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `galleries`
 --
 ALTER TABLE `galleries`
@@ -786,6 +982,36 @@ ALTER TABLE `model_has_permissions`
 --
 ALTER TABLE `model_has_roles`
   ADD CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `packages`
+--
+ALTER TABLE `packages`
+  ADD CONSTRAINT `packages_place_id_foreign` FOREIGN KEY (`place_id`) REFERENCES `places` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `package_images`
+--
+ALTER TABLE `package_images`
+  ADD CONSTRAINT `package_images_package_id_foreign` FOREIGN KEY (`package_id`) REFERENCES `packages` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `package_includes`
+--
+ALTER TABLE `package_includes`
+  ADD CONSTRAINT `package_includes_package_id_foreign` FOREIGN KEY (`package_id`) REFERENCES `packages` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `package_itineraries`
+--
+ALTER TABLE `package_itineraries`
+  ADD CONSTRAINT `package_itineraries_package_id_foreign` FOREIGN KEY (`package_id`) REFERENCES `packages` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `places`
+--
+ALTER TABLE `places`
+  ADD CONSTRAINT `places_country_id_foreign` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `role_has_permissions`

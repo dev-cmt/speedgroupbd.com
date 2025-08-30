@@ -18,6 +18,9 @@ return new class extends Migration
             $table->foreignId('continent_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('slug')->unique();
+            $table->string('flag')->nullable();
+            $table->text('description')->nullable();
+            $table->boolean('status')->default(true); 
             $table->timestamps();
         });
     }

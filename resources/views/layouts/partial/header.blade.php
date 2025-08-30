@@ -13,10 +13,10 @@
             </a> --}}
 			<a href="{{url('/')}}" class="brand-logo">
                 <span class="logo-abbr" width="50" height="50">
-					<h2 style="font-size: 32px">B</h2>
+					<h2 style="font-size: 32px">S</h2>
 				</span>
                 <span class="brand-title" width="74" height="22">
-					<h2 style="font-size: 32px">AFIITA</h2>
+					<h2 style="font-size: 32px">GBD</h2>
 				</span>
             </a>
 

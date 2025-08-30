@@ -66,43 +66,33 @@
                                             <li><a href="{{route('page.about-us')}}">About</a></li>
                                             <li class="dropdown2">
                                                 <a href="#">Package</a>
+                                                @php
+                                                    $continents = \App\Models\Continent::with('countries')->where('status', true)->get();
+                                                @endphp
                                                 <ul>
-                                                    <li class="dropdown2">
-                                                        <a href="#">Asia</a>
-                                                        <ul>
-                                                            <li><a href="{{route('page.package')}}">Nepal</a></li>
-                                                            <li><a href="{{route('page.package')}}">Maldives</a></li>
-                                                            <li><a href="{{route('page.package')}}">Srilanka</a></li>
-                                                            <li><a href="{{route('page.package')}}">Malaysia</a></li>
-                                                            <li><a href="{{route('page.package')}}">Singapore</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li class="dropdown2">
-                                                        <a href="#">Europe</a>
-                                                        <ul>
-                                                            <li><a href="{{route('page.package')}}">Finland</a></li>
-                                                            <li><a href="{{route('page.package')}}">France</a></li>
-                                                            <li><a href="{{route('page.package')}}">Germany</a></li>
-                                                            <li><a href="{{route('page.package')}}">Italy</a></li>
-                                                            <li><a href="{{route('page.package')}}">Malta</a></li>
-                                                            <li><a href="{{route('page.package')}}">Portugal</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li class="dropdown2">
-                                                        <a href="#">Middle East</a>
-                                                        <ul>
-                                                            <li><a href="{{route('page.package')}}">Bahrain</a></li>
-                                                            <li><a href="{{route('page.package')}}">Iran</a></li>
-                                                            <li><a href="{{route('page.package')}}">Jordan</a></li>
-                                                            <li><a href="{{route('page.package')}}">Kuwait</a></li>
-                                                            <li><a href="{{route('page.package')}}">Oman</a></li>
-                                                           <li><a href="{{route('page.package')}}">Qatar</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="{{route('page.package-details-multicity')}}">Multi-City</a></li>
+                                                    @foreach($continents as $continent)
+                                                        <li class="dropdown2">
+                                                            <a href="#">{{ $continent->name }}</a>
+                                                            @if($continent->countries->count() > 0)
+                                                                <ul>
+                                                                    @foreach($continent->countries as $country)
+                                                                        <li>
+                                                                            <a href="{{ route('page.package', $country->slug) }}">
+                                                                                {{ $country->name }}
+                                                                            </a>
+                                                                        </li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            @endif
+                                                        </li>
+                                                    @endforeach
 
+                                                    <li>
+                                                        <a href="{{ route('page.package-details-multicity') }}">Multi-City</a>
+                                                    </li>
                                                 </ul>
                                             </li>
+
                                             <li><a href="{{route('page.package')}}">Bangladesh</a></li>
                                             <li><a href="{{route('page.package')}}">Umrah</a></li>
                                             <li><a href="{{route('page.package')}}">Hajj</a></li>

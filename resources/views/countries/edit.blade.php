@@ -60,20 +60,6 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-lg-4 col-form-label" for="val-slug">Slug
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <div class="col-lg-6">
-                                            <input type="text" id="val-slug" class="form-control @error('slug') is-invalid @enderror"
-                                                name="slug" placeholder="Enter slug.." value="{{ old('slug', $country->slug) }}">
-                                            @error('slug')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group row">
@@ -87,7 +73,7 @@
                                             @enderror
                                             @if($country->flag)
                                                 <div class="mt-2">
-                                                    <img src="{{ asset('storage/' . $country->flag) }}" alt="Current flag" width="60" height="40" class="img-thumbnail">
+                                                    <img src="{{ asset('public/' . $country->flag) }}" alt="Current flag" width="60" height="40" class="img-thumbnail">
                                                     <small class="form-text text-muted">Current flag</small>
                                                 </div>
                                             @endif

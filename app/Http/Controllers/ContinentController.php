@@ -31,7 +31,6 @@ class ContinentController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:continents',
-            'slug' => 'required|string|max:255|unique:continents',
         ]);
 
         Continent::create($request->all());
@@ -64,13 +63,11 @@ class ContinentController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:continents,name,' . $continent->id,
-            'slug' => 'required|string|max:255|unique:continents,slug,' . $continent->id,
         ]);
 
         $continent->update($request->all());
 
-        return redirect()->route('continents.index')
-            ->with('success', 'Continent updated successfully.');
+        return redirect()->route('continents.index')->with('success', 'Continent updated successfully.');
     }
 
     /**
@@ -80,7 +77,6 @@ class ContinentController extends Controller
     {
         $continent->delete();
 
-        return redirect()->route('continents.index')
-            ->with('success', 'Continent deleted successfully.');
+        return redirect()->route('continents.index')->with('success', 'Continent deleted successfully.');
     }
 }

@@ -253,49 +253,5 @@ class GalleryController extends Controller
         return back();
     }
 
-    /**________________________________________________________________________________
-     * Dashboard View Pages
-     * ________________________________________________________________________________
-     */
-    public function bvGallery()
-    {
-        $posts=Gallery::all();
-        return view('layouts.pages.gallery.bv-gallery')->with('posts',$posts);
-    }
-    public function bvGalleryImage($id)
-    {
-        $posts=Gallery::findOrFail($id);
-        return view('layouts.pages.gallery.bv-gallery-image')->with('posts',$posts);
-    }
-
-
-    function downloadFile($id){
-        $images=GalleryImages::findOrFail($id);
-
-        $filepath = public_path("images/gallery/img/".$images->image);
-        return Response::download($filepath);
-    }
-    public function dowloads(){
-        $files = [
-            0 => ('images/icon/01.png'),
-            1 => ('images/icon/02.png')
-        ];
-
-        $zip = new \ZipArchive;
-        $zipFile = 'zip-file.zip';
-
-        if ($zip->open(public_path($zipFile), ZipArchive::CREATE) === TRUE){
-            foreach ($files as $file) {
-                $pathToFile = public_path($file);
-
-                $name = basename($pathToFile);
-
-                $zip->addFile($pathToFile, $name);
-            }
-            $zip->close();
-        }
-        return response()->download(public_path($zipFile));
-    }
-
 
 }
